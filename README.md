@@ -44,6 +44,11 @@ flask run
 pre requisites:
 BINANCE_API_KEY = "your_api_key"
 BINANCE_API_SECRET = "your_api_secret"
+
+The output looks like this:
+![image](https://github.com/user-attachments/assets/1c8ca727-f1a7-4ce7-908f-8d037e98fe09)
+![Uploading image.png…]()
+
 Solana Configuration
 Set the Solana RPC URL in config/solana_config.py:
 
