@@ -21,11 +21,11 @@ def get_arbitrage_opportunities():
 
     opportunities = []
     for pair, binance_price in binance_pairs.items():
-        # Replace with actual Solana pair token logic
+        # Solana pair token logic
         if pair not in ["DOGEUSDC", "SOLUSDC", "BONKUSDC"]:
             continue
         
-        # Fetch Solana price (this is just an example function, replace it with your logic)
+        # Fetch Solana price
         solana_price = get_solana_price()
 
         # Arbitrage calculation
