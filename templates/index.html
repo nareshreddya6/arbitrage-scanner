@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbitrage Scanner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .refresh-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .refresh-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .refresh-btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading .spinner {
+            display: inline-block;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th:first-child, td:first-child {
+            text-align: left;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #666;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .positive {
+            color: #28a745;
+        }
+
+        .last-update {
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            th, td {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1 class="title">Arbitrage Scanner</h1>
+                <p>Binance vs Solana DEX Opportunities</p>
+            </div>
+            <button id="refreshBtn" class="refresh-btn">
+                <div class="spinner"></div>
+                Refresh Data
+            </button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Token Pair</th>
+                    <th>Binance Price</th>
+                    <th>Solana DEX Price</th>
+                    <th>Difference</th>
+                    <th>Profit After Fees</th>
+                    <th>24h Volume</th>
+                </tr>
+            </thead>
+            <tbody id="opportunitiesTable">
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+
+        <div id="lastUpdate" class="last-update"></div>
+    </div>
+
+    <script>
+        class ArbitrageScanner {
+            constructor() {
+                this.refreshBtn = document.getElementById('refreshBtn');
+                this.table = document.getElementById('opportunitiesTable');
+                this.lastUpdate = document.getElementById('lastUpdate');
+                
+                this.refreshBtn.addEventListener('click', () => this.fetchData());
+                this.initializeApp();
+            }
+
+            initializeApp() {
+                this.fetchData();
+                // Refresh every 30 seconds
+                setInterval(() => this.fetchData(), 30000);
+            }
+
+             /*async fetchData() {
+                this.setLoading(true);
+
+                // Simulate API call with mock data
+                // In real implementation, you would fetch from your backend
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                const mockData = [
+                    {
+                        token: "SOL/USDC",
+                        binancePrice: 118.45,
+                        solanaPrice: 119.82,
+                        priceDifference: 1.37,
+                        percentageDifference: 1.16,
+                        profitAfterFees: 0.85,
+                        volume24h: 15234567
+                    },
+                    {
+                        token: "BONK/USDC",
+                        binancePrice: 0.00001234,
+                        solanaPrice: 0.00001312,
+                        priceDifference: 0.00000078,
+                        percentageDifference: 6.32,
+                        profitAfterFees: 0.00000052,
+                        volume24h: 8234567
+                    },
+                    {
+                        token: "RAY/USDC",
+                        binancePrice: 0.456,
+                        solanaPrice: 0.471,
+                        priceDifference: 0.015,
+                        percentageDifference: 3.29,
+                        profitAfterFees: 0.008,
+                        volume24h: 5234567
+                    }
+                ];
+
+                this.updateTable(mockData);
+                this.setLoading(false);
+                this.updateTimestamp();
+            } */
+            async fetchData() {
+                this.setLoading(true);
+            
+                try {
+                    const response = await fetch('/api/arbitrage'); // Flask API endpoint
+                    const data = await response.json();
+                    console.log(data)
+                    this.updateTable(data);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                } finally {
+                    this.setLoading(false);
+                    this.updateTimestamp();
+                }
+            }
+
+            updateTable(data) {
+                this.table.innerHTML = data.map(opportunity => `
+                    <tr>
+                        <td>${opportunity.token}</td>
+                        <td>$${opportunity.binancePrice.toFixed(8)}</td>
+                        <td>$${opportunity.solanaPrice.toFixed(8)}</td>
+                        <td class="positive">+${opportunity.percentageDifference.toFixed(2)}%</td>
+                        <td class="positive">$${opportunity.profitAfterFees.toFixed(8)}</td>
+                        <td>$${(opportunity.volume24h / 1000000).toFixed(2)}M</td>
+                    </tr>
+                `).join('');
+            }
+
+            setLoading(isLoading) {
+                this.refreshBtn.disabled = isLoading;
+                this.refreshBtn.classList.toggle('loading', isLoading);
+            }
+
+            updateTimestamp() {
+                const now = new Date();
+                this.lastUpdate.textContent = `Last updated: ${now.toLocaleTimeString()}`;
+            }
+        }
+        
+        
+
+        // Initialize the application
+        new ArbitrageScanner();
+    </script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+
+{
+  "name": "arbitrage-scanner",
+  "version": "1.0.0",
+  "description": "A Solana arbitrage scanner",
+  "main": "frontend.js",
+  "type": "module",  
+  "scripts": {
+    "start": "node frontend.js"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.0"
+  }
+}
+
+

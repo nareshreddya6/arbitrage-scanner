@@ -1,0 +1,24 @@
+2025-01-09 21:34:09,323 - Arbitrage Opportunity: DOGEUSDC, Profit: $19263.11
+2025-01-09 21:35:55,932 - Arbitrage Opportunity: DOGEUSDC, Profit: $19263.14
+2025-01-09 21:37:02,522 - Arbitrage Opportunity: DOGEUSDC, Profit: $19183.12
+2025-01-10 00:36:54,615 - Arbitrage Opportunity: DOGEUSDC, Profit: $18793.53
+2025-01-10 01:18:14,725 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-10 01:18:14,726 - [33mPress CTRL+C to quit[0m
+2025-01-10 01:18:14,727 -  * Restarting with stat
+2025-01-10 01:18:16,156 -  * Debugger is active!
+2025-01-10 01:18:16,158 -  * Debugger PIN: 129-867-514
+2025-01-10 01:20:45,881 - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2025-01-10 01:20:45,881 - [33mPress CTRL+C to quit[0m
+2025-01-10 01:20:45,882 -  * Restarting with stat
+2025-01-10 01:20:47,114 -  * Debugger is active!
+2025-01-10 01:20:47,116 -  * Debugger PIN: 129-867-514
+2025-01-10 01:21:15,912 - 127.0.0.1 - - [10/Jan/2025 01:21:15] "[33mGET / HTTP/1.1[0m" 404 -
+2025-01-10 01:21:16,169 - 127.0.0.1 - - [10/Jan/2025 01:21:16] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2025-01-10 01:37:43,629 -  * Detected change in 'C:\\Users\\Z\\arbitrage-scanner\\src\\solana_dex_api.py', reloading
+2025-01-10 01:37:43,707 -  * Restarting with stat
+2025-01-10 01:37:45,216 -  * Debugger is active!
+2025-01-10 01:37:45,218 -  * Debugger PIN: 129-867-514
+2025-01-10 02:16:00,765 -  * Detected change in 'C:\\Users\\Z\\arbitrage-scanner\\app.py', reloading
+2025-01-10 02:16:00,845 -  * Restarting with stat
